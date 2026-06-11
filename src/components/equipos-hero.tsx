@@ -85,10 +85,10 @@ export function EquiposHero() {
   return (
     <section
       ref={root}
-      className="relative overflow-hidden border-b border-line pt-36 pb-10 md:pt-44 md:pb-14"
+      className="relative isolate overflow-hidden border-b border-line pt-36 pb-10 md:pt-44 md:pb-14"
     >
       {/* Imagen de fondo (obra) con Ken Burns */}
-      <div ref={bg} className="absolute inset-0 -z-30 will-change-transform">
+      <div ref={bg} className="absolute inset-0 z-0 will-change-transform">
         <Image
           src="/pexels-pok-rie-33563-1188532.jpg"
           alt=""
@@ -99,13 +99,13 @@ export function EquiposHero() {
         />
       </div>
       {/* Velo blanco: imagen visible, texto legible a la izquierda */}
-      <div className="absolute inset-0 -z-20 bg-white/20" />
-      <div className="absolute inset-0 -z-20 bg-gradient-to-r from-white via-white/70 to-transparent" />
-      <div className="absolute inset-0 -z-20 bg-gradient-to-t from-white/85 via-transparent to-transparent" />
+      <div className="absolute inset-0 z-[1] bg-white/15" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white via-white/60 to-transparent" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/80 via-transparent to-transparent" />
 
       {/* Grid tecnico de fondo */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-40"
+        className="pointer-events-none absolute inset-0 z-[2] opacity-40"
         style={{
           backgroundImage:
             "linear-gradient(var(--color-line) 1px, transparent 1px), linear-gradient(90deg, var(--color-line) 1px, transparent 1px)",
@@ -116,7 +116,7 @@ export function EquiposHero() {
         }}
       />
 
-      <div className="container-x relative">
+      <div className="container-x relative z-10">
         <div className="flex items-start justify-between gap-6">
           <p className="eh-kicker kicker">Catálogo completo</p>
 
@@ -162,7 +162,7 @@ export function EquiposHero() {
       </div>
 
       {/* Tira de imagenes en loop */}
-      <div className="mt-12 overflow-hidden md:mt-16">
+      <div className="relative z-10 mt-12 overflow-hidden md:mt-16">
         <div ref={track} className="flex w-max gap-4 will-change-transform">
           {[...STRIP, ...STRIP].map((p, i) => (
             <div
