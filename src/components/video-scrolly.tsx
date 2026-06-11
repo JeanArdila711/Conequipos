@@ -42,22 +42,27 @@ export function VideoScrolly() {
 
   useEffect(() => {
     // Con reduced-motion el pin y el cambio de escenas SIGUEN funcionando
-    // (es contenido, no decoracion); solo se elimina el desplazamiento en Y.
+    // (es contenido, no decoracion); solo se suaviza el movimiento.
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const shift = reduce ? 0 : 50;
+    const shift = reduce ? 0 : 40;
 
     const ctx = gsap.context((self) => {
+      const panels = self.selector!(".vs-panel") as HTMLElement[];
       const videos = self.selector!(".vs-video") as HTMLVideoElement[];
       const scenes = self.selector!(".vs-scene") as HTMLElement[];
+
+      // Posicion inicial via GSAP (unica fuente de transform — un inline
+      // translateY se apilaria con el yPercent del tween).
+      gsap.set(panels.slice(1), { yPercent: 100, autoAlpha: 1 });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: "+=250%",
+          end: "+=160%",
           pin: true,
-          scrub: 0.6,
+          scrub: 0.5,
           onUpdate: (st) => {
             const idx = Math.min(2, Math.floor(st.progress * 3));
             const el = root.current?.querySelector(".vs-count");
@@ -66,24 +71,37 @@ export function VideoScrolly() {
         },
       });
 
-      // Cada escena dura 1 unidad; transicion i-1 -> i alrededor de t=i
+      // Cada transicion: el panel siguiente SUBE desde abajo y se superpone,
+      // con parallax interno del video. Rapida (0.5 de 1 unidad por escena).
       for (let i = 1; i < SCENES.length; i++) {
-        tl.to(
-          scenes[i - 1],
-          { autoAlpha: 0, y: -shift, duration: 0.35, ease: "power2.in" },
-          i - 0.4
+        const at = i;
+        tl.fromTo(
+          panels[i],
+          { yPercent: 100 },
+          { yPercent: 0, duration: 0.5, ease: "power2.out" },
+          at - 0.5
         )
-          .to(videos[i - 1], { autoAlpha: 0, duration: 0.45 }, i - 0.25)
-          .to(videos[i], { autoAlpha: 1, duration: 0.45 }, i - 0.25)
+          // parallax interno: el video llega "frenando" dentro del panel
+          .fromTo(
+            videos[i],
+            { yPercent: -8 },
+            { yPercent: 0, duration: 0.5, ease: "power2.out" },
+            at - 0.5
+          )
+          .to(
+            scenes[i - 1],
+            { autoAlpha: 0, y: -shift, duration: 0.22, ease: "power1.in" },
+            at - 0.5
+          )
           .fromTo(
             scenes[i],
             { autoAlpha: 0, y: shift },
-            { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
-            i - 0.1
+            { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
+            at - 0.18
           );
       }
-      // respiro final para la ultima escena
-      tl.to({}, { duration: 0.7 });
+      // respiro corto al final
+      tl.to({}, { duration: 0.35 });
 
       // Play/pause segun viewport
       ScrollTrigger.create({
@@ -102,24 +120,28 @@ export function VideoScrolly() {
 
   return (
     <section ref={root} className="relative isolate h-svh overflow-hidden bg-black">
-      {/* Videos apilados — solo el primero visible por defecto (CSS, no JS) */}
+      {/* Paneles de video apilados — los siguientes arrancan abajo (CSS, no JS) */}
       {SCENES.map((s, i) => (
-        <video
+        <div
           key={s.src}
-          className="vs-video absolute inset-0 z-0 h-full w-full object-cover"
-          style={i > 0 ? { opacity: 0, visibility: "hidden" } : undefined}
-          src={s.src}
-          muted
-          loop
-          playsInline
-          autoPlay={i === 0}
-          preload={i === 0 ? "auto" : "metadata"}
-        />
+          className="vs-panel absolute inset-0 overflow-hidden will-change-transform"
+          style={{ zIndex: i, ...(i > 0 ? { visibility: "hidden" } : {}) }}
+        >
+          <video
+            className="vs-video h-full w-full scale-[1.18] object-cover will-change-transform"
+            src={s.src}
+            muted
+            loop
+            playsInline
+            autoPlay={i === 0}
+            preload={i === 0 ? "auto" : "metadata"}
+          />
+        </div>
       ))}
 
-      {/* Scrims para legibilidad (texto abajo + header arriba) */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-      <div className="absolute inset-x-0 top-0 z-[1] h-28 bg-gradient-to-b from-black/50 to-transparent" />
+      {/* Scrims para legibilidad (sobre los paneles) */}
+      <div className="absolute inset-0 z-[5] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+      <div className="absolute inset-x-0 top-0 z-[5] h-28 bg-gradient-to-b from-black/50 to-transparent" />
 
       {/* Escenas de texto — apiladas, solo la 1 visible por defecto */}
       <div className="container-x relative z-10 h-full">
