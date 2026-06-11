@@ -2,12 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/product-card";
-import { CatalogIndex } from "@/components/catalog-index";
-import { SearchIcon, CloseIcon, GridIcon, IndexIcon } from "@/components/icons";
+import { SearchIcon, CloseIcon } from "@/components/icons";
 import type { Category, Product } from "@/data/catalog";
 import { cn } from "@/lib/utils";
-
-type View = "grid" | "index";
 
 export function CatalogGrid({
   products,
@@ -20,7 +17,6 @@ export function CatalogGrid({
 }) {
   const [cat, setCat] = useState<string>(initialCategory ?? "all");
   const [q, setQ] = useState("");
-  const [view, setView] = useState<View>("grid");
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
@@ -111,37 +107,23 @@ export function CatalogGrid({
       {/* RESULTADOS */}
       <div>
         <div className="mb-8 flex items-center justify-between border-b border-line pb-5">
-          <div className="flex items-center gap-4">
-            <p className="font-mono text-xs uppercase tracking-widest text-mute">
-              {filtered.length} {filtered.length === 1 ? "equipo" : "equipos"}
-            </p>
-            {(cat !== "all" || q) && (
-              <button
-                onClick={() => {
-                  setCat("all");
-                  setQ("");
-                }}
-                className="font-mono text-xs uppercase tracking-widest text-mute transition-colors hover:text-brand"
-              >
-                Limpiar
-              </button>
-            )}
-          </div>
-
-          {/* Toggle de vista */}
-          <div className="flex items-center gap-1 rounded-full border border-line p-1">
-            <ViewButton active={view === "grid"} onClick={() => setView("grid")} label="Cuadrícula">
-              <GridIcon />
-            </ViewButton>
-            <ViewButton active={view === "index"} onClick={() => setView("index")} label="Índice">
-              <IndexIcon />
-            </ViewButton>
-          </div>
+          <p className="font-mono text-xs uppercase tracking-widest text-mute">
+            {filtered.length} {filtered.length === 1 ? "equipo" : "equipos"}
+          </p>
+          {(cat !== "all" || q) && (
+            <button
+              onClick={() => {
+                setCat("all");
+                setQ("");
+              }}
+              className="font-mono text-xs uppercase tracking-widest text-mute transition-colors hover:text-brand"
+            >
+              Limpiar
+            </button>
+          )}
         </div>
 
-        {filtered.length === 0 ? null : view === "index" ? (
-          <CatalogIndex products={filtered} />
-        ) : (
+        {filtered.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {filtered.map((p, i) => (
               <ProductCard key={p.id} product={p} index={i} />
@@ -157,31 +139,5 @@ export function CatalogGrid({
         )}
       </div>
     </div>
-  );
-}
-
-function ViewButton({
-  active,
-  onClick,
-  label,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      aria-label={label}
-      aria-pressed={active}
-      className={cn(
-        "flex h-8 w-8 items-center justify-center rounded-full transition-colors",
-        active ? "bg-brand text-white" : "text-mute hover:text-bone"
-      )}
-    >
-      {children}
-    </button>
   );
 }
