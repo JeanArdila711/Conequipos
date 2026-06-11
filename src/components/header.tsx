@@ -4,15 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
-import { Magnetic } from "@/components/magnetic";
-import { cn, waLink } from "@/lib/utils";
-
-const NAV = [
-  { href: "/equipos", label: "Equipos" },
-  { href: "/nosotros", label: "Nosotros" },
-  { href: "/experiencias", label: "Experiencias" },
-  { href: "/contacto", label: "Contacto" },
-];
+import { MenuOverlay } from "@/components/menu-overlay";
+import { cn } from "@/lib/utils";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,7 +13,7 @@ export function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -28,105 +21,45 @@ export function Header() {
 
   useEffect(() => setOpen(false), [pathname]);
 
+  // El home arranca con hero oscuro (video). Hasta hacer scroll, la barra va clara.
+  const isHome = pathname === "/";
+  const darkOver = isHome && !scrolled;
+
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 [transition-timing-function:var(--ease-out-expo)]",
-        scrolled
-          ? "border-line bg-ink/90 backdrop-blur-xl"
-          : "border-transparent bg-ink/75 backdrop-blur-md"
-      )}
-    >
-      <div className="container-x flex h-18 items-center justify-between py-4">
-        <Link href="/" aria-label="Conequipos — inicio">
-          <Logo className="h-10 md:h-12" />
-        </Link>
-
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV.map((n) => {
-            const active = pathname.startsWith(n.href);
-            return (
-              <Link
-                key={n.href}
-                href={n.href}
-                className={cn(
-                  "relative px-4 py-2 text-sm font-medium transition-colors",
-                  active ? "text-bone" : "text-mute hover:text-bone"
-                )}
-              >
-                {n.label}
-                {active && (
-                  <span className="absolute inset-x-4 -bottom-px h-px bg-brand" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <Magnetic className="hidden md:inline-block">
-            <a
-              href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-glow"
-            >
-              Cotizar ahora
-            </a>
-          </Magnetic>
+    <>
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 [transition-timing-function:var(--ease-out-expo)]",
+          scrolled
+            ? "border-line bg-ink/85 backdrop-blur-xl"
+            : "border-transparent bg-transparent"
+        )}
+      >
+        <div className="container-x flex h-18 items-center justify-between py-4">
+          <Link href="/" aria-label="Conequipos — inicio">
+            <Logo className={cn("h-8 md:h-9", darkOver && "brightness-0 invert")} />
+          </Link>
 
           <button
-            onClick={() => setOpen((v) => !v)}
-            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full border border-line md:hidden"
-            aria-label="Menú"
+            onClick={() => setOpen(true)}
+            aria-label="Abrir menú"
+            className={cn(
+              "group flex items-center gap-3 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors",
+              darkOver
+                ? "border-white/25 text-white hover:border-brand-glow hover:text-brand-glow"
+                : "border-line text-bone hover:border-brand hover:text-brand"
+            )}
           >
-            <span className="flex flex-col gap-1.5">
-              <span
-                className={cn(
-                  "block h-px w-5 bg-bone transition-transform",
-                  open && "translate-y-[3.5px] rotate-45"
-                )}
-              />
-              <span
-                className={cn(
-                  "block h-px w-5 bg-bone transition-transform",
-                  open && "-translate-y-[3.5px] -rotate-45"
-                )}
-              />
+            Menú
+            <span className="flex w-4 flex-col gap-[3px]">
+              <span className="block h-px w-full bg-current transition-transform duration-300 group-hover:translate-y-[1px]" />
+              <span className="block h-px w-full bg-current transition-transform duration-300 group-hover:-translate-y-[1px]" />
             </span>
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Menú móvil */}
-      <div
-        className={cn(
-          "grid overflow-hidden border-t border-line bg-ink/95 backdrop-blur-xl transition-all duration-500 md:hidden",
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr] border-t-transparent"
-        )}
-      >
-        <div className="min-h-0">
-          <nav className="container-x flex flex-col py-4">
-            {NAV.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                className="border-b border-line py-4 font-display text-2xl"
-              >
-                {n.label}
-              </Link>
-            ))}
-            <a
-              href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex justify-center rounded-full bg-brand px-5 py-3 font-semibold text-white"
-            >
-              Cotizar ahora
-            </a>
-          </nav>
-        </div>
-      </div>
-    </header>
+      <MenuOverlay open={open} onClose={() => setOpen(false)} />
+    </>
   );
 }
