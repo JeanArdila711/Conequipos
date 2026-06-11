@@ -148,7 +148,7 @@ export function EquiposHero() {
           {[...STRIP, ...STRIP].map((p, i) => (
             <div
               key={i}
-              className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl border border-line bg-ink-2 md:h-32 md:w-48"
+              className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl border border-line bg-white md:h-32 md:w-48"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

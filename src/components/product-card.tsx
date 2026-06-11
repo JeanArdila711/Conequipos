@@ -11,7 +11,7 @@ export function ProductCard({ product, index }: { product: Product; index?: numb
       data-reveal-delay={((index ?? 0) % 3) * 0.06}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-ink-2 transition-colors duration-500 hover:border-brand/60"
     >
-      <div className="relative aspect-4/3 overflow-hidden bg-ink-3">
+      <div className="relative aspect-4/3 overflow-hidden bg-white">
         {product.image ? (
           <Image
             src={product.image}

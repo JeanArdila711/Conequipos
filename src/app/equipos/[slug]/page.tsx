@@ -82,7 +82,7 @@ export default async function ProductPage({
 
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Imagen */}
-          <div className="relative aspect-square overflow-hidden rounded-3xl border border-line bg-ink-2">
+          <div className="relative aspect-square overflow-hidden rounded-3xl border border-line bg-white">
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.12] blur-3xl"
               style={{
