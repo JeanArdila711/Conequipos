@@ -68,6 +68,12 @@ export function VideoScrolly() {
             const el = root.current?.querySelector(".vs-count");
             if (el) el.textContent = `0${idx + 1}`;
           },
+          // Pausa solo cuando el pin (toda la seccion) sale de vista —
+          // no a mitad de las escenas.
+          onLeave: () => videos.forEach((v) => v.pause()),
+          onLeaveBack: () => videos.forEach((v) => v.pause()),
+          onEnter: () => videos.forEach((v) => v.play().catch(() => {})),
+          onEnterBack: () => videos.forEach((v) => v.play().catch(() => {})),
         },
       });
 
@@ -103,16 +109,8 @@ export function VideoScrolly() {
       // respiro corto al final
       tl.to({}, { duration: 0.4 });
 
-      // Play/pause segun viewport
-      ScrollTrigger.create({
-        trigger: root.current,
-        start: "top bottom",
-        end: "bottom top",
-        onEnter: () => videos.forEach((v) => v.play().catch(() => {})),
-        onEnterBack: () => videos.forEach((v) => v.play().catch(() => {})),
-        onLeave: () => videos.forEach((v) => v.pause()),
-        onLeaveBack: () => videos.forEach((v) => v.pause()),
-      });
+      // Arranca todos reproduciendo (muted = autoplay permitido)
+      videos.forEach((v) => v.play().catch(() => {}));
     }, root);
 
     return () => ctx.revert();
@@ -133,8 +131,8 @@ export function VideoScrolly() {
             muted
             loop
             playsInline
-            autoPlay={i === 0}
-            preload={i === 0 ? "auto" : "metadata"}
+            autoPlay
+            preload="auto"
           />
         </div>
       ))}
