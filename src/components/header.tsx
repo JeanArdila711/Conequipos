@@ -31,10 +31,10 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500 [transition-timing-function:var(--ease-out-expo)]",
+        "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 [transition-timing-function:var(--ease-out-expo)]",
         scrolled
-          ? "bg-ink/80 backdrop-blur-xl border-b border-line"
-          : "bg-transparent border-b border-transparent"
+          ? "border-line bg-ink/90 backdrop-blur-xl"
+          : "border-transparent bg-ink/75 backdrop-blur-md"
       )}
     >
       <div className="container-x flex h-18 items-center justify-between py-4">

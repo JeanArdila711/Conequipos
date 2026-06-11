@@ -1,18 +1,23 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Magnetic } from "@/components/magnetic";
+import { ArrowRight } from "@/components/icons";
+import { waLink } from "@/lib/utils";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 const SCENES = [
   {
     src: "/videos/obra-1.mp4",
-    kicker: "Alquiler certificado",
-    line1: "Maquinaria",
-    line2: "que rinde.",
-    sub: "Equipos revisados y mantenidos, listos para producir desde el primer día.",
+    kicker: "Alquiler de equipos · Medellín & Antioquia",
+    line1: "Maquinaria que",
+    line2: "no para tu obra.",
+    sub: "Equipos certificados y mantenidos, listos para producir desde el primer día.",
+    cta: true,
   },
   {
     src: "/videos/obra-2.mp4",
@@ -20,6 +25,7 @@ const SCENES = [
     line1: "Entregamos",
     line2: "donde estés.",
     sub: "Llevamos y recogemos el equipo en tu obra. Tú no mueves un dedo.",
+    cta: false,
   },
   {
     src: "/videos/obra-3.mp4",
@@ -27,6 +33,7 @@ const SCENES = [
     line1: "Respaldo",
     line2: "permanente.",
     sub: "Asesoría técnica activa durante todo el alquiler. Tu obra no se detiene.",
+    cta: false,
   },
 ];
 
@@ -37,19 +44,9 @@ export function VideoScrolly() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    const ctx = gsap.context(() => {
-      const videos = gsap.utils.toArray<HTMLVideoElement>(".vs-video");
-      const scenes = gsap.utils.toArray<HTMLElement>(".vs-scene");
-
-      // Estado inicial: solo la escena 0 visible
-      gsap.set(videos, { autoAlpha: 0 });
-      gsap.set(videos[0], { autoAlpha: 1 });
-      scenes.forEach((s, i) => {
-        gsap.set(s.querySelectorAll(".vs-el"), {
-          autoAlpha: i === 0 ? 1 : 0,
-          y: i === 0 ? 0 : 40,
-        });
-      });
+    const ctx = gsap.context((self) => {
+      const videos = self.selector!(".vs-video") as HTMLVideoElement[];
+      const scenes = self.selector!(".vs-scene") as HTMLElement[];
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -59,34 +56,34 @@ export function VideoScrolly() {
           end: "+=250%",
           pin: true,
           scrub: 0.6,
-          onUpdate: (self) => {
-            const idx = Math.min(2, Math.floor(self.progress * 3));
+          onUpdate: (st) => {
+            const idx = Math.min(2, Math.floor(st.progress * 3));
             const el = root.current?.querySelector(".vs-count");
             if (el) el.textContent = `0${idx + 1}`;
           },
         },
       });
 
-      // Transicion 1 -> 2 (en t=1) y 2 -> 3 (en t=2); cada escena dura 1
+      // Cada escena dura 1 unidad; transicion i-1 -> i alrededor de t=i
       for (let i = 1; i < SCENES.length; i++) {
-        const at = i;
         tl.to(
-          scenes[i - 1].querySelectorAll(".vs-el"),
-          { autoAlpha: 0, y: -40, duration: 0.35, stagger: 0.04, ease: "power2.in" },
-          at - 0.35
+          scenes[i - 1],
+          { autoAlpha: 0, y: -50, duration: 0.35, ease: "power2.in" },
+          i - 0.4
         )
-          .to(videos[i - 1], { autoAlpha: 0, duration: 0.4 }, at - 0.2)
-          .to(videos[i], { autoAlpha: 1, duration: 0.4 }, at - 0.2)
-          .to(
-            scenes[i].querySelectorAll(".vs-el"),
-            { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.06, ease: "power2.out" },
-            at - 0.05
+          .to(videos[i - 1], { autoAlpha: 0, duration: 0.45 }, i - 0.25)
+          .to(videos[i], { autoAlpha: 1, duration: 0.45 }, i - 0.25)
+          .fromTo(
+            scenes[i],
+            { autoAlpha: 0, y: 50 },
+            { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
+            i - 0.1
           );
       }
-      // relleno para que la ultima escena respire
-      tl.to({}, { duration: 0.6 });
+      // respiro final para la ultima escena
+      tl.to({}, { duration: 0.7 });
 
-      // Solo reproducir videos cuando la seccion esta en viewport
+      // Play/pause segun viewport
       ScrollTrigger.create({
         trigger: root.current,
         start: "top bottom",
@@ -103,35 +100,61 @@ export function VideoScrolly() {
 
   return (
     <section ref={root} className="relative isolate h-svh overflow-hidden bg-black">
-      {/* Videos apilados */}
-      {SCENES.map((s) => (
+      {/* Videos apilados — solo el primero visible por defecto (CSS, no JS) */}
+      {SCENES.map((s, i) => (
         <video
           key={s.src}
           className="vs-video absolute inset-0 z-0 h-full w-full object-cover"
+          style={i > 0 ? { opacity: 0, visibility: "hidden" } : undefined}
           src={s.src}
           muted
           loop
           playsInline
-          preload="metadata"
+          autoPlay={i === 0}
+          preload={i === 0 ? "auto" : "metadata"}
         />
       ))}
 
-      {/* Scrim para legibilidad */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/80 via-black/35 to-black/30" />
+      {/* Scrims para legibilidad (texto abajo + header arriba) */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+      <div className="absolute inset-x-0 top-0 z-[1] h-28 bg-gradient-to-b from-black/50 to-transparent" />
 
-      {/* Escenas de texto */}
-      <div className="container-x relative z-10 flex h-full items-end pb-16 md:pb-24">
+      {/* Escenas de texto — apiladas, solo la 1 visible por defecto */}
+      <div className="container-x relative z-10 h-full">
         {SCENES.map((s, i) => (
           <div
             key={i}
-            className="vs-scene absolute inset-x-[var(--spacing-gutter)] bottom-16 md:bottom-24"
+            className="vs-scene absolute inset-x-0 bottom-16 md:bottom-24"
+            style={i > 0 ? { opacity: 0, visibility: "hidden" } : undefined}
           >
-            <p className="vs-el kicker !text-brand-glow">{s.kicker}</p>
+            <p className="kicker !text-brand-glow">{s.kicker}</p>
             <h2 className="mt-4 font-display font-bold text-white display-lg">
-              <span className="vs-el block">{s.line1}</span>
-              <span className="vs-el block text-brand-glow">{s.line2}</span>
+              <span className="block">{s.line1}</span>
+              <span className="block text-brand-glow">{s.line2}</span>
             </h2>
-            <p className="vs-el mt-5 max-w-md text-balance text-white/75">{s.sub}</p>
+            <p className="mt-5 max-w-md text-balance text-white/75">{s.sub}</p>
+
+            {s.cta && (
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Magnetic>
+                  <a
+                    href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-white transition-colors hover:bg-brand-glow"
+                  >
+                    Cotizar mi equipo
+                    <ArrowRight />
+                  </a>
+                </Magnetic>
+                <Link
+                  href="/equipos"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-4 font-semibold text-white transition-colors hover:border-brand-glow hover:text-brand-glow"
+                >
+                  Ver catálogo
+                </Link>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -141,6 +164,11 @@ export function VideoScrolly() {
         <span className="vs-count text-white">01</span>
         <span>/</span>
         <span>03</span>
+      </div>
+
+      {/* Hint de scroll */}
+      <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 font-mono text-[0.6rem] uppercase tracking-[0.25em] text-white/50">
+        Scroll
       </div>
     </section>
   );

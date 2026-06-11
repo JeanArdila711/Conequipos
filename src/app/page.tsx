@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Hero } from "@/components/hero";
 import { VideoScrolly } from "@/components/video-scrolly";
 import { Marquee } from "@/components/marquee";
 import { ProductCard } from "@/components/product-card";
@@ -32,8 +31,6 @@ const PROCESS = [
 export default function Home() {
   return (
     <>
-      <Hero />
-
       <VideoScrolly />
 
       <Marquee
