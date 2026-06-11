@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container-x py-20">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Logo className="text-xl" />
+            <Logo className="h-9" />
             <p className="mt-5 max-w-sm text-balance text-mute">
               Alquiler y venta de maquinaria certificada para construcción.
               Medellín · Itagüí · Antioquia.
@@ -18,7 +18,7 @@ export function Footer() {
               href={waLink("Hola Conequipos, quiero cotizar un equipo.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-brand hover:text-brand-glow"
+              className="mt-7 inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-brand hover:text-brand"
             >
               Hablemos por WhatsApp
             </a>

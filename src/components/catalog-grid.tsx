@@ -93,7 +93,7 @@ function FilterChip({
       className={cn(
         "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
         active
-          ? "border-brand bg-brand text-ink"
+          ? "border-brand bg-brand text-white"
           : "border-line text-mute hover:border-brand/50 hover:text-bone"
       )}
     >

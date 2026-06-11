@@ -37,7 +37,7 @@ export function ProductCard({ product, index }: { product: Product; index?: numb
         </h3>
         <p className="line-clamp-2 text-sm text-mute">{product.description}</p>
 
-        <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-medium text-brand-glow">
+        <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-medium text-brand">
           Ver ficha
           <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
         </span>

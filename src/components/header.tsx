@@ -39,7 +39,7 @@ export function Header() {
     >
       <div className="container-x flex h-18 items-center justify-between py-4">
         <Link href="/" aria-label="Conequipos — inicio">
-          <Logo className="text-lg" />
+          <Logo className="h-7 md:h-8" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -69,7 +69,7 @@ export function Header() {
               href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-brand-glow"
+              className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-glow"
             >
               Cotizar ahora
             </a>
@@ -120,7 +120,7 @@ export function Header() {
               href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex justify-center rounded-full bg-brand px-5 py-3 font-semibold text-ink"
+              className="mt-5 inline-flex justify-center rounded-full bg-brand px-5 py-3 font-semibold text-white"
             >
               Cotizar ahora
             </a>

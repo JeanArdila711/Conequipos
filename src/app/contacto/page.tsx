@@ -57,7 +57,7 @@ export default function ContactoPage() {
             href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-ink transition-colors hover:bg-brand-glow"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-white transition-colors hover:bg-brand-glow"
           >
             <WhatsAppIcon className="h-5 w-5" />
             Escribir por WhatsApp

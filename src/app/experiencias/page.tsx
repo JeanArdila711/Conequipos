@@ -69,7 +69,7 @@ export default function ExperienciasPage() {
         <div className="mt-16">
           <Link
             href="/contacto"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-glow"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand"
           >
             Quiero trabajar con Conequipos
             <ArrowRight />

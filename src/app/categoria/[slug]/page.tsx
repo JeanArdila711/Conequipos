@@ -62,7 +62,7 @@ export default async function CategoryPage({
               href={`/categoria/${c.slug}`}
               className={
                 c.slug === slug
-                  ? "rounded-full border border-brand bg-brand px-4 py-2 text-sm font-medium text-ink"
+                  ? "rounded-full border border-brand bg-brand px-4 py-2 text-sm font-medium text-white"
                   : "rounded-full border border-line px-4 py-2 text-sm text-mute transition-colors hover:border-brand/50 hover:text-bone"
               }
             >
@@ -84,7 +84,7 @@ export default async function CategoryPage({
         <div className="mt-16">
           <Link
             href="/equipos"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-glow"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand"
           >
             Ver catálogo completo
             <ArrowRight />

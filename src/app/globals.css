@@ -2,25 +2,27 @@
 
 /* =========================================================
    CONEQUIPOS — Design System
-   Esencia: verde + negro (logo). Elevado a dark industrial premium.
+   Esencia: verde + negro (logo). Light premium editorial.
+   Nota: los tokens "ink/bone" conservan su rol semantico
+   (ink = fondo, bone = texto) aunque ahora el tema es claro.
    ========================================================= */
 
 @theme {
-  /* Base */
-  --color-ink: #0a0b0c;          /* casi negro — fondo */
-  --color-ink-2: #101214;        /* superficie elevada */
-  --color-ink-3: #16191c;        /* cards */
-  --color-line: #23282d;         /* bordes hairline */
-  --color-bone: #f3f5f1;         /* texto principal (hueso) */
-  --color-mute: #8b938c;         /* texto secundario */
+  /* Base (claro) */
+  --color-ink: #ffffff;          /* fondo — papel */
+  --color-ink-2: #f5f6f2;        /* superficie elevada / secciones */
+  --color-ink-3: #ebece7;        /* cards / placeholders */
+  --color-line: #e2e4de;         /* bordes hairline */
+  --color-bone: #0c0e0d;         /* texto principal (casi negro) */
+  --color-mute: #6a716b;         /* texto secundario */
 
   /* Marca */
-  --color-brand: #1fa64a;        /* verde Conequipos refinado */
-  --color-brand-glow: #34e27a;   /* verde neon — acentos / glow */
+  --color-brand: #128a3c;        /* verde Conequipos — texto/fills, legible en blanco */
+  --color-brand-glow: #1fb255;   /* verde vivo — glows / hover fills */
   --color-brand-deep: #0d5a28;   /* verde profundo */
 
   /* Industrial */
-  --color-hazard: #ffb800;       /* ambar maquinaria — micro acento */
+  --color-hazard: #d98300;       /* ambar maquinaria — micro acento */
 
   /* Fuentes (cargadas via next/font como variables) */
   --font-display: var(--font-space), system-ui, sans-serif;
@@ -104,7 +106,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--color-brand-glow);
+    color: var(--color-brand);
   }
 
   /* Texto display fluido */
@@ -130,7 +132,7 @@
     inset: 0;
     z-index: 9999;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.022;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 

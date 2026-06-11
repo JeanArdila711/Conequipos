@@ -60,7 +60,7 @@ export default function Home() {
           <Link
             data-reveal
             href="/equipos"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-glow transition-all hover:gap-3"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition-all hover:gap-3"
           >
             Ver todos los equipos
             <ArrowRight />
@@ -80,12 +80,12 @@ export default function Home() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <h3 className="font-display text-2xl text-bone transition-colors group-hover:text-brand-glow">
+                <h3 className="font-display text-2xl text-bone transition-colors group-hover:text-brand">
                   {c.name}
                 </h3>
                 <p className="mt-1 text-sm text-mute">{c.count} equipos</p>
               </div>
-              <ArrowRight className="absolute right-7 top-7 h-5 w-5 text-mute opacity-0 transition-all duration-500 group-hover:text-brand-glow group-hover:opacity-100" />
+              <ArrowRight className="absolute right-7 top-7 h-5 w-5 text-mute opacity-0 transition-all duration-500 group-hover:text-brand group-hover:opacity-100" />
             </Link>
           ))}
         </div>
@@ -147,7 +147,7 @@ export default function Home() {
       {/* CTA FINAL */}
       <section className="relative overflow-hidden border-t border-line">
         <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-30 blur-[100px]"
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.12] blur-[100px]"
           style={{
             background:
               "radial-gradient(60% 60% at 50% 100%, var(--color-brand) 0%, transparent 70%)",
@@ -166,7 +166,7 @@ export default function Home() {
                 href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-4 text-lg font-semibold text-ink transition-colors hover:bg-brand-glow"
+                className="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-brand-glow"
               >
                 Cotizar por WhatsApp
                 <ArrowRight />

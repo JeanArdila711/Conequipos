@@ -84,7 +84,7 @@ export default async function ProductPage({
           {/* Imagen */}
           <div className="relative aspect-square overflow-hidden rounded-3xl border border-line bg-ink-2">
             <div
-              className="pointer-events-none absolute inset-0 opacity-25 blur-3xl"
+              className="pointer-events-none absolute inset-0 opacity-[0.12] blur-3xl"
               style={{
                 background:
                   "radial-gradient(60% 60% at 50% 60%, var(--color-brand) 0%, transparent 70%)",
@@ -137,7 +137,7 @@ export default async function ProductPage({
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-ink transition-colors hover:bg-brand-glow"
+                  className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-white transition-colors hover:bg-brand-glow"
                 >
                   <WhatsAppIcon className="h-5 w-5" />
                   Cotizar este equipo
@@ -169,7 +169,7 @@ export default async function ProductPage({
             </h2>
             <Link
               href={`/categoria/${product.categories[0]}`}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-brand-glow"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-brand"
             >
               Ver categoría
               <ArrowRight />

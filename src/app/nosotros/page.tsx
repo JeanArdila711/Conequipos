@@ -97,7 +97,7 @@ export default function NosotrosPage() {
               href={waLink("Hola Conequipos, quiero conocer más sobre sus equipos.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-4 font-semibold text-ink transition-colors hover:bg-brand-glow"
+              className="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-4 font-semibold text-white transition-colors hover:bg-brand-glow"
             >
               Contáctanos
               <ArrowRight />

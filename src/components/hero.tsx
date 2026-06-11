@@ -50,7 +50,7 @@ export function Hero() {
     >
       {/* Glow de fondo */}
       <div
-        className="hero-glow pointer-events-none absolute left-1/2 top-1/3 -z-10 h-[60vh] w-[80vw] -translate-x-1/2 rounded-full opacity-40 blur-[120px]"
+        className="hero-glow pointer-events-none absolute left-1/2 top-1/3 -z-10 h-[60vh] w-[80vw] -translate-x-1/2 rounded-full opacity-[0.14] blur-[120px]"
         style={{
           background:
             "radial-gradient(circle, var(--color-brand) 0%, transparent 65%)",
@@ -58,7 +58,7 @@ export function Hero() {
       />
       {/* Grid técnico */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-60"
         style={{
           backgroundImage:
             "linear-gradient(var(--color-line) 1px, transparent 1px), linear-gradient(90deg, var(--color-line) 1px, transparent 1px)",
@@ -96,7 +96,7 @@ export function Hero() {
               href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="hero-cta inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-ink transition-colors hover:bg-brand-glow"
+              className="hero-cta inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-white transition-colors hover:bg-brand-glow"
             >
               Cotizar mi equipo
               <ArrowRight />
