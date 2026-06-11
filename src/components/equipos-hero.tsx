@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { categories, products } from "@/data/catalog";
@@ -12,6 +13,7 @@ const STRIP = products.filter((p) => p.image).slice(0, 14);
 export function EquiposHero() {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
+  const bg = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -27,6 +29,15 @@ export function EquiposHero() {
           )
           .from(".eh-sub", { y: 20, opacity: 0, duration: 0.9 }, "-=0.6")
           .from(".eh-meta", { y: 14, opacity: 0, duration: 0.8, stagger: 0.08 }, "-=0.6");
+
+        // Ken Burns sutil sobre la imagen de fondo
+        gsap.to(bg.current, {
+          scale: 1.12,
+          duration: 18,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
 
         // Contadores
         gsap.utils.toArray<HTMLElement>(".eh-count").forEach((el) => {
@@ -57,7 +68,6 @@ export function EquiposHero() {
             start: "top bottom",
             end: "bottom top",
             onUpdate: (self) => {
-              // acelera/empuja la tira segun la velocidad de scroll
               gsap.to(loop, {
                 timeScale: 1 + Math.min(6, Math.abs(self.getVelocity()) / 200),
                 duration: 0.4,
@@ -77,9 +87,25 @@ export function EquiposHero() {
       ref={root}
       className="relative overflow-hidden border-b border-line pt-36 pb-10 md:pt-44 md:pb-14"
     >
+      {/* Imagen de fondo (obra) con Ken Burns */}
+      <div ref={bg} className="absolute inset-0 -z-30 will-change-transform">
+        <Image
+          src="/pexels-pok-rie-33563-1188532.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+      {/* Velo blanco: imagen visible, texto legible a la izquierda */}
+      <div className="absolute inset-0 -z-20 bg-white/20" />
+      <div className="absolute inset-0 -z-20 bg-gradient-to-r from-white via-white/70 to-transparent" />
+      <div className="absolute inset-0 -z-20 bg-gradient-to-t from-white/85 via-transparent to-transparent" />
+
       {/* Grid tecnico de fondo */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-50"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-40"
         style={{
           backgroundImage:
             "linear-gradient(var(--color-line) 1px, transparent 1px), linear-gradient(90deg, var(--color-line) 1px, transparent 1px)",
@@ -89,15 +115,8 @@ export function EquiposHero() {
             "radial-gradient(120% 80% at 50% 0%, #000 30%, transparent 75%)",
         }}
       />
-      {/* Glow verde sutil */}
-      <div
-        className="pointer-events-none absolute -top-1/3 left-1/2 -z-10 h-[55vh] w-[75vw] -translate-x-1/2 rounded-full opacity-[0.1] blur-[120px]"
-        style={{
-          background: "radial-gradient(circle, var(--color-brand) 0%, transparent 65%)",
-        }}
-      />
 
-      <div className="container-x">
+      <div className="container-x relative">
         <div className="flex items-start justify-between gap-6">
           <p className="eh-kicker kicker">Catálogo completo</p>
 
