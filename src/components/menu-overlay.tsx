@@ -86,7 +86,7 @@ export function MenuOverlay({
     <div
       ref={root}
       aria-hidden={!open}
-      className={`fixed inset-0 z-[60] bg-[#0a0c0b] text-white ${
+      className={`fixed inset-0 z-[60] bg-black/40 text-white backdrop-blur-2xl backdrop-saturate-150 ${
         open ? "pointer-events-auto" : "pointer-events-none"
       }`}
     >
@@ -157,7 +157,7 @@ export function MenuOverlay({
               sizes="33vw"
               className="scale-110 object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0c0b] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-7">
               <p className="kicker !text-brand-glow">
                 {String(hover + 1).padStart(2, "0")} / 04
