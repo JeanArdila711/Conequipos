@@ -102,6 +102,11 @@ export function VideoScrolly() {
   }, []);
 
   return (
+    // Wrapper externo que React conserva: GSAP pinea el <section> y lo mete en
+    // un pin-spacer DENTRO de este div. Al navegar, React quita este div (su
+    // padre no cambió) y el section/pin-spacer se descartan como descendientes.
+    // Sin esto, React intenta removeChild del <section> reparentado -> crash.
+    <div>
     <section
       ref={root}
       data-video-hero
@@ -180,5 +185,6 @@ export function VideoScrolly() {
         Scroll
       </div>
     </section>
+    </div>
   );
 }

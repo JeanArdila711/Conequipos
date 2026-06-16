@@ -10,6 +10,7 @@ import { getLenis } from "@/components/smooth-scroll";
 import { EMAIL, WHATSAPP_DISPLAY, waLink } from "@/lib/utils";
 
 const LINKS = [
+  { href: "/", label: "Inicio" },
   { href: "/equipos", label: "Equipos" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/experiencias", label: "Experiencias" },
