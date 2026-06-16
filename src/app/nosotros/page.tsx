@@ -19,7 +19,7 @@ export default function NosotrosPage() {
       <section className="container-x pt-36 pb-24 md:pt-44 md:pb-36">
         <ScrollPaintText
           text="No alquilamos máquinas. Entregamos tiempo, productividad y tranquilidad para que tu obra no se detenga."
-          className="display-lg max-w-[20ch] text-3xl leading-tight md:text-5xl"
+          className="display-lg w-full text-center text-3xl leading-tight md:text-5xl"
         />
       </section>
 
@@ -127,7 +127,7 @@ export default function NosotrosPage() {
 
       {/* Stats */}
       <section className="border-y border-line bg-ink-2/40">
-        <div className="container-x grid gap-12 py-20 md:grid-cols-3">
+        <div className="container-x grid gap-12 py-12 md:grid-cols-3 md:py-16">
           <StatCounter value={95} suffix="%" label="Disponibilidad de equipos" />
           <StatCounter value={9} suffix="+" label="Categorías de maquinaria" />
           <StatCounter value={100} suffix="%" label="Equipos con mantenimiento" />

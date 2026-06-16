@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { VideoScrolly } from "@/components/video-scrolly";
 import { Marquee } from "@/components/marquee";
 import { DispatchBoard } from "@/components/dispatch-board";
@@ -8,47 +9,29 @@ import { categories, products } from "@/data/catalog";
 
 const featured = products.filter((p) => p.image).slice(0, 7);
 
-// Categoria por slug, para leer nombre + count sin duplicar data.
-const bySlug = Object.fromEntries(categories.map((c) => [c.slug, c]));
+// Foto temática (de obra, no de producto) por categoría — ambiente, no catálogo.
+const CAT_PHOTO: Record<string, string> = {
+  "accesorios-y-herramientas":
+    "/pexels-sofoklis-saripanidis-13143901-31499725.jpg",
+  "andamios-y-formaletas": "/pexels-betongsmcsg-37121347.jpg",
+  "compresores-de-aire": "/pexels-ehma-15794732.jpg",
+  "equipos-de-compactacion": "/pexels-construccion-total-2464540-14420873.jpg",
+  "equipos-de-concreto": "/pexels-construccion-total-2464540-6106878.jpg",
+  "equipos-de-elevacion": "/pexels-mehmet-aksoy-374584031-16764815.jpg",
+  "equipos-de-iluminacion": "/pexels-lucaspezeta-2333694.jpg",
+  "equipos-de-movimiento-de-tierra": "/pexels-rahibyaqubov-23978113.jpg",
+  "equipos-electromecanicos": "/pexels-construccion-total-2464540-14466335.jpg",
+  "equipos-generadores-de-energia": "/pexels-pok-rie-33563-1188532.jpg",
+};
 
-// Las 10 categorias agrupadas en 3 "frentes de obra" — lenguaje de obrero,
-// no de catalogo. Cada frente lista sus subcategorias reales.
-const FRENTES = [
-  {
-    n: "01",
-    icon: "equipos-de-compactacion",
-    title: "Mueves tierra",
-    tagline: "Excava, compacta y deja el terreno a punto.",
-    slugs: [
-      "equipos-de-movimiento-de-tierra",
-      "equipos-de-compactacion",
-      "compresores-de-aire",
-    ],
-  },
-  {
-    n: "02",
-    icon: "equipos-de-concreto",
-    title: "Levantas estructura",
-    tagline: "Funde, vibra y sube material a cada piso.",
-    slugs: [
-      "equipos-de-concreto",
-      "equipos-de-elevacion",
-      "andamios-y-formaletas",
-    ],
-  },
-  {
-    n: "03",
-    icon: "equipos-generadores-de-energia",
-    title: "Energía y soporte",
-    tagline: "Potencia, luz y todo lo que sostiene la obra.",
-    slugs: [
-      "equipos-generadores-de-energia",
-      "equipos-de-iluminacion",
-      "equipos-electromecanicos",
-      "accesorios-y-herramientas",
-    ],
-  },
-];
+// Las 6 categorías con más equipos — el resto vive en el catálogo completo.
+const featuredCats = [...categories]
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 6);
+
+// Alturas alto/bajo por columna (CSS columns llena col1=[0,1], col2=[2,3]...),
+// imitando el escalonado de services15. Mínimos altos: nada queda diminuto.
+const HEIGHTS = ["h-80", "h-56", "h-56", "h-80", "h-80", "h-56"];
 
 const PROCESS = [
   {
@@ -86,127 +69,71 @@ export default function Home() {
         ]}
       />
 
-      {/* CATEGORÍAS */}
-      <section className="container-x py-24 md:py-36">
-        <div className="mb-14 grid items-end gap-x-10 gap-y-10 lg:grid-cols-[1fr_auto]">
-          <div className="max-w-2xl">
-            <ScrollPaintText
-              as="h2"
-              className="display-lg text-balance"
-              segments={[
-                { text: "Cada frente de tu obra," },
-                { text: "con su equipo listo", to: "#128a3c" },
-              ]}
-            />
-            <p data-reveal className="mt-5 max-w-md text-mute">
-              Equipos certificados, mantenidos y disponibles para despachar.
-              Elige una especialidad y cotiza en minutos.
-            </p>
-          </div>
-
-          {/* Ficha de flota: tablero mono con los numeros reales */}
-          <div
-            data-reveal
-            className="w-full rounded-2xl border border-line bg-ink-2 p-6 lg:w-80"
-          >
-            <div className="flex items-end gap-3">
-              <span className="font-display text-6xl font-bold leading-none text-brand tabular-nums">
-                {products.length}
-              </span>
-              <span className="pb-1 text-sm leading-tight text-mute">
-                equipos
-                <br />
-                en flota
-              </span>
-            </div>
-
-            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line text-center">
-              <div className="bg-ink-2 px-3 py-3">
-                <p className="font-mono text-xl text-bone tabular-nums">
-                  {categories.length}
-                </p>
-                <p className="mt-0.5 text-xs text-mute">categorías</p>
-              </div>
-              <div className="bg-ink-2 px-3 py-3">
-                <p className="font-mono text-xl text-bone tabular-nums">24h</p>
-                <p className="mt-0.5 text-xs text-mute">despacho</p>
-              </div>
-            </div>
-
-            <Link
-              href="/equipos"
-              className="group mt-5 flex items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-deep"
-            >
-              Ver todo el catálogo
-              <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </div>
+      {/* CATEGORÍAS — masonry de especialidades (cada card lleva a su categoría) */}
+      <section className="container-x py-16 md:py-20">
+        <div className="mb-10 max-w-2xl">
+          <ScrollPaintText
+            as="h2"
+            className="display-lg text-balance"
+            segments={[
+              { text: "Cada frente de tu obra," },
+              { text: "con su equipo listo", to: "#128a3c" },
+            ]}
+          />
+          <p data-reveal className="mt-5 max-w-md text-mute">
+            Equipos certificados, mantenidos y disponibles para despachar. Elige
+            una especialidad y cotiza en minutos.
+          </p>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
-          {FRENTES.map((f) => {
-            const total = f.slugs.reduce(
-              (sum, s) => sum + (bySlug[s]?.count ?? 0),
-              0
-            );
-            return (
-              <div
-                key={f.n}
-                data-reveal="scale"
-                className="group/frente flex flex-col rounded-2xl border border-line bg-ink-2 p-7 transition-colors duration-500 hover:border-brand/40 md:p-8"
-              >
-                {/* Cabecera del frente: icono + indice + total tipo tablero */}
-                <div className="flex items-start justify-between">
-                  <span
-                    data-draw
-                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors duration-500 group-hover/frente:bg-brand group-hover/frente:text-white"
-                  >
-                    <CategoryIcon slug={f.icon} className="h-6 w-6" />
-                  </span>
-                  <span className="flex items-baseline gap-1 text-xs text-mute">
-                    <span className="rounded bg-ink px-1.5 py-0.5 font-mono tabular-nums text-bone">
-                      {String(total).padStart(2, "0")}
-                    </span>
-                    equipos
-                  </span>
-                </div>
+        {/* Masonry: cards con foto a sangre y título encima (services15) */}
+        <div className="gap-4 sm:columns-2 lg:columns-3">
+          {featuredCats.map((c, i) => (
+            <Link
+              key={c.slug}
+              href={`/categoria/${c.slug}`}
+              data-reveal="scale"
+              className={`group relative mb-4 block break-inside-avoid overflow-hidden rounded-2xl ${
+                HEIGHTS[i % HEIGHTS.length]
+              }`}
+            >
+              <Image
+                src={CAT_PHOTO[c.slug]}
+                alt={c.name}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 30vw"
+                className="object-cover transition-transform duration-[1.2s] [transition-timing-function:var(--ease-out-expo)] group-hover:scale-110"
+              />
+              {/* Scrim para legibilidad del texto */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+              {/* Tinte de marca al hover */}
+              <div className="absolute inset-0 bg-brand mix-blend-multiply opacity-0 transition-opacity duration-500 group-hover:opacity-30" />
 
-                <div className="mt-6">
-                  <span className="text-xs font-semibold text-brand">
-                    Frente {f.n}
-                  </span>
-                  <h3 className="mt-1 font-display text-2xl leading-tight text-bone">
-                    {f.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-mute">{f.tagline}</p>
-                </div>
+              {/* Flecha ↗ arriba-derecha (services15) */}
+              <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-all duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:bg-white group-hover:text-bone">
+                <ArrowRight className="h-4 w-4 -rotate-45" />
+              </span>
 
-                {/* Subcategorias reales: cada fila enlaza a su categoria */}
-                <ul className="mt-6 flex flex-col border-t border-line">
-                  {f.slugs.map((s) => {
-                    const c = bySlug[s];
-                    if (!c) return null;
-                    return (
-                      <li key={s}>
-                        <Link
-                          href={`/categoria/${s}`}
-                          className="group/row flex items-center justify-between gap-3 border-b border-line py-3 text-sm transition-colors hover:text-brand"
-                        >
-                          <span className="flex items-center gap-2 font-medium text-bone transition-colors group-hover/row:text-brand">
-                            <ArrowRight className="h-3.5 w-3.5 -translate-x-2 text-brand opacity-0 transition-all duration-300 group-hover/row:translate-x-0 group-hover/row:opacity-100" />
-                            {c.name}
-                          </span>
-                          <span className="font-mono text-xs tabular-nums text-mute transition-colors group-hover/row:text-brand">
-                            {String(c.count).padStart(2, "0")}
-                          </span>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
+              {/* Título abajo-izquierda */}
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <h3 className="font-display text-2xl font-bold leading-tight text-white">
+                  {c.name}
+                </h3>
+                <p className="mt-1 text-sm text-white/70">{c.count} equipos</p>
               </div>
-            );
-          })}
+            </Link>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/equipos"
+            className="group inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-brand-deep"
+          >
+            Ver todo el catálogo
+            <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
         </div>
       </section>
 

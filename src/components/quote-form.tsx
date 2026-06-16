@@ -37,30 +37,12 @@ export function QuoteForm() {
   }
 
   const fieldClass =
-    "w-full rounded-xl border border-line bg-ink px-4 py-3 text-bone outline-none transition-colors placeholder:text-mute focus:border-brand";
+    "w-full rounded-xl border border-line bg-ink-2 px-4 py-3 text-bone outline-none transition-colors placeholder:text-mute focus:border-brand";
   const labelClass = "mb-2 block text-xs font-medium text-mute";
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="rounded-2xl border border-line bg-ink-2 p-7 md:p-10"
-    >
-      <div className="mb-2 flex items-center gap-2">
-        <span className="kicker">Cotización exprés</span>
-        <span className="ml-auto flex items-center gap-1.5 text-xs font-medium text-brand">
-          <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-brand/60" />
-            <span className="relative inline-flex size-2 rounded-full bg-brand" />
-          </span>
-          Respuesta el mismo día
-        </span>
-      </div>
-      <h2 className="display-lg text-3xl md:text-4xl">Arma tu pedido</h2>
-      <p className="mt-3 text-sm text-mute">
-        Llena lo que sepas. Abrimos WhatsApp con tu pedido listo para enviar.
-      </p>
-
-      <div className="mt-8 grid gap-5">
+    <form onSubmit={onSubmit}>
+      <div className="grid gap-5">
         <div>
           <label htmlFor="equipo" className={labelClass}>
             ¿Qué equipo necesitas?

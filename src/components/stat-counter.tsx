@@ -40,8 +40,8 @@ export function StatCounter({
   }, [value]);
 
   return (
-    <div ref={ref}>
-      <div className="font-display text-5xl font-bold text-bone md:text-7xl">
+    <div ref={ref} className="text-center">
+      <div className="font-display text-4xl font-bold text-bone md:text-5xl">
         {n}
         <span className="text-brand">{suffix}</span>
       </div>
