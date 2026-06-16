@@ -77,11 +77,11 @@ export default function ContactoPage() {
           </div>
           <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-line pt-8">
             <div>
-              <dt className="font-mono text-xs text-mute">Cobertura</dt>
+              <dt className="text-sm text-mute">Cobertura</dt>
               <dd className="mt-1 font-display text-xl">Medellín &amp; Antioquia</dd>
             </div>
             <div>
-              <dt className="font-mono text-xs text-mute">Respuesta</dt>
+              <dt className="text-sm text-mute">Respuesta</dt>
               <dd className="mt-1 font-display text-xl">El mismo día</dd>
             </div>
           </dl>

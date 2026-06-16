@@ -176,7 +176,7 @@ export function VideoScrolly() {
       </div>
 
       {/* Hint de scroll */}
-      <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 font-mono text-[0.6rem] uppercase tracking-[0.25em] text-white/50">
+      <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 text-[0.7rem] font-medium tracking-wide text-white/50">
         Scroll
       </div>
     </section>

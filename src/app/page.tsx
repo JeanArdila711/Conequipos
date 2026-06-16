@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { VideoScrolly } from "@/components/video-scrolly";
 import { Marquee } from "@/components/marquee";
-import { ProductCard } from "@/components/product-card";
+import { DispatchBoard } from "@/components/dispatch-board";
 import { ScrollPaintText } from "@/components/scroll-paint-text";
 import { ArrowRight, CategoryIcon } from "@/components/icons";
 import { categories, products } from "@/data/catalog";
 
-const featured = products.filter((p) => p.image).slice(0, 6);
+const featured = products.filter((p) => p.image).slice(0, 7);
 
 // Categoria por slug, para leer nombre + count sin duplicar data.
 const bySlug = Object.fromEntries(categories.map((c) => [c.slug, c]));
@@ -163,8 +163,8 @@ export default function Home() {
                   >
                     <CategoryIcon slug={f.icon} className="h-6 w-6" />
                   </span>
-                  <span className="flex items-baseline gap-1 font-mono text-xs text-mute">
-                    <span className="rounded bg-ink px-1.5 py-0.5 tabular-nums text-bone">
+                  <span className="flex items-baseline gap-1 text-xs text-mute">
+                    <span className="rounded bg-ink px-1.5 py-0.5 font-mono tabular-nums text-bone">
                       {String(total).padStart(2, "0")}
                     </span>
                     equipos
@@ -172,7 +172,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-6">
-                  <span className="font-mono text-xs text-brand">
+                  <span className="text-xs font-semibold text-brand">
                     Frente {f.n}
                   </span>
                   <h3 className="mt-1 font-display text-2xl leading-tight text-bone">
@@ -210,21 +210,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* DESTACADOS */}
-      <section className="border-y border-line bg-ink-2/40">
+      {/* DESTACADOS — tablero de despacho en vivo (slab oscuro) */}
+      <section className="border-y border-line bg-bone text-ink">
         <div className="container-x py-24 md:py-36">
-          <div className="mb-14">
+          <div className="mb-12 max-w-2xl">
+            <span className="text-sm font-semibold text-brand-glow">
+              Los que más nos piden
+            </span>
             <ScrollPaintText
               as="h2"
-              className="display-lg max-w-[18ch]"
+              className="mt-4 display-lg max-w-[18ch]"
               text="Equipos listos para entregar hoy"
+              from="rgba(255,255,255,0.25)"
+              to="#ffffff"
             />
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} />
-            ))}
-          </div>
+          <DispatchBoard products={featured} />
         </div>
       </section>
 
@@ -344,7 +345,7 @@ export default function Home() {
             <div className="relative flex items-center justify-between rounded-xl border border-line bg-ink p-5">
               <div className="flex flex-col items-center gap-1">
                 <span className="size-2.5 rounded-full bg-mute" />
-                <span className="font-mono text-[0.65rem] text-mute">BODEGA</span>
+                <span className="text-[0.7rem] font-medium text-mute">Bodega</span>
               </div>
               <svg
                 className="mx-2 h-6 flex-1 text-brand"
@@ -370,7 +371,7 @@ export default function Home() {
               </svg>
               <div className="flex flex-col items-center gap-1">
                 <span className="size-2.5 rounded-full bg-brand" />
-                <span className="font-mono text-[0.65rem] text-brand">OBRA</span>
+                <span className="text-[0.7rem] font-medium text-brand">Obra</span>
               </div>
             </div>
           </div>

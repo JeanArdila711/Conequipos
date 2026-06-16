@@ -124,7 +124,7 @@ export function EquiposHero() {
                   {String(products.length).padStart(2, "0")}
                 </span>
               </div>
-              <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-widest text-mute">
+              <p className="mt-1 text-[0.72rem] font-medium text-mute">
                 Equipos
               </p>
             </div>
@@ -134,7 +134,7 @@ export function EquiposHero() {
                   {String(categories.length).padStart(2, "0")}
                 </span>
               </div>
-              <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-widest text-mute">
+              <p className="mt-1 text-[0.72rem] font-medium text-mute">
                 Categorías
               </p>
             </div>

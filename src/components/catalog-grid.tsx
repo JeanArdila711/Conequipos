@@ -68,7 +68,7 @@ export function CatalogGrid({
             className="flex w-full items-center justify-between rounded-2xl border border-line bg-ink-2 px-5 py-3.5 text-left"
           >
             <span className="flex items-baseline gap-2">
-              <span className="font-mono text-[0.62rem] uppercase tracking-widest text-mute">
+              <span className="text-[0.72rem] font-medium text-mute">
                 Categoría
               </span>
               <span className="font-medium text-bone">{activeName}</span>
@@ -164,7 +164,7 @@ export function CatalogGrid({
       {/* RESULTADOS */}
       <div>
         <div className="mb-8 flex items-center justify-between border-b border-line pb-5">
-          <p className="font-mono text-xs uppercase tracking-widest text-mute">
+          <p className="text-sm font-medium text-mute">
             {filtered.length} {filtered.length === 1 ? "equipo" : "equipos"}
           </p>
           {(cat !== "all" || q) && (
@@ -173,7 +173,7 @@ export function CatalogGrid({
                 setCat("all");
                 setQ("");
               }}
-              className="font-mono text-xs uppercase tracking-widest text-mute transition-colors hover:text-brand"
+              className="text-sm font-medium text-mute transition-colors hover:text-brand"
             >
               Limpiar
             </button>

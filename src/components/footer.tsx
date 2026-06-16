@@ -67,7 +67,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col gap-2 border-t border-line pt-6 text-xs text-mute md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Conequipos S.A.S. Todos los derechos reservados.</p>
-          <p className="font-mono">Hecho con precisión industrial.</p>
+          <p>Hecho con precisión industrial.</p>
         </div>
       </div>
     </footer>

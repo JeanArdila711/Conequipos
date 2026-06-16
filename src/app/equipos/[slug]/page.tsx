@@ -61,7 +61,7 @@ export default async function ProductPage({
     <>
       <div className="container-x pt-32 md:pt-40">
         {/* Migas */}
-        <nav className="mb-10 flex flex-wrap items-center gap-2 font-mono text-xs text-mute">
+        <nav className="mb-10 flex flex-wrap items-center gap-2 text-sm text-mute">
           <Link href="/equipos" className="hover:text-bone">
             Equipos
           </Link>
@@ -100,7 +100,7 @@ export default async function ProductPage({
                 className="object-contain p-10"
               />
             ) : (
-              <div className="flex h-full items-center justify-center font-mono text-sm text-mute">
+              <div className="flex h-full items-center justify-center text-sm text-mute">
                 sin imagen
               </div>
             )}
@@ -153,7 +153,7 @@ export default async function ProductPage({
               </a>
             </div>
 
-            <p className="mt-6 font-mono text-xs text-mute">
+            <p className="mt-6 text-xs text-mute">
               Ref · {product.slug}
             </p>
           </div>

@@ -27,7 +27,7 @@ export function ProductCard({
             className="object-contain p-2 transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-105 sm:p-6"
           />
         ) : (
-          <div className="flex h-full items-center justify-center font-mono text-xs text-mute">
+          <div className="flex h-full items-center justify-center text-xs text-mute">
             sin imagen
           </div>
         )}
