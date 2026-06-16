@@ -67,7 +67,6 @@ export default function ContactoPage() {
         {/* Bloque horario / promesa */}
         <div className="flex flex-col justify-between rounded-2xl border border-line bg-ink-2 p-8 md:p-10">
           <div>
-            <p className="kicker mb-4">Atención</p>
             <h2 className="display-lg text-3xl md:text-4xl">
               Lunes a sábado, en horario de obra
             </h2>

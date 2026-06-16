@@ -3,12 +3,18 @@ import Image from "next/image";
 import type { Product } from "@/data/catalog";
 import { ArrowRight } from "@/components/icons";
 
-export function ProductCard({ product, index }: { product: Product; index?: number }) {
+export function ProductCard({
+  product,
+  reveal = true,
+}: {
+  product: Product;
+  index?: number;
+  reveal?: boolean;
+}) {
   return (
     <Link
       href={`/equipos/${product.slug}`}
-      data-reveal
-      data-reveal-delay={((index ?? 0) % 3) * 0.06}
+      {...(reveal ? { "data-reveal": "scale" } : {})}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-ink-2 transition-colors duration-500 hover:border-brand/60"
     >
       <div className="relative aspect-square overflow-hidden bg-white sm:aspect-4/3">

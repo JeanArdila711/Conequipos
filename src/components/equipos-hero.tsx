@@ -21,11 +21,9 @@ export function EquiposHero() {
       if (!reduce) {
         // Reveal del titular por lineas + meta
         const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-        tl.from(".eh-kicker", { y: 16, opacity: 0, duration: 0.7 })
-          .from(
+        tl.from(
             ".eh-line-in",
-            { yPercent: 115, duration: 1.05, stagger: 0.1 },
-            "-=0.35"
+            { yPercent: 115, duration: 1.05, stagger: 0.1 }
           )
           .from(".eh-sub", { y: 20, opacity: 0, duration: 0.9 }, "-=0.6")
           .from(".eh-meta", { y: 14, opacity: 0, duration: 0.8, stagger: 0.08 }, "-=0.6");
@@ -117,9 +115,7 @@ export function EquiposHero() {
       />
 
       <div className="container-x relative z-10">
-        <div className="flex items-start justify-between gap-6">
-          <p className="eh-kicker kicker">Catálogo completo</p>
-
+        <div className="flex items-start justify-end gap-6">
           {/* Contadores */}
           <div className="eh-meta flex shrink-0 gap-8 text-right">
             <div>

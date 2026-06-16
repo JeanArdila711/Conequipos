@@ -4,9 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Magnetic } from "@/components/magnetic";
 import { ArrowRight } from "@/components/icons";
-import { waLink } from "@/lib/utils";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
@@ -25,14 +23,6 @@ const SCENES = [
     line1: "Entregamos",
     line2: "donde estés.",
     sub: "Llevamos y recogemos el equipo en tu obra. Tú no mueves un dedo.",
-    cta: false,
-  },
-  {
-    src: "/videos/obra-3.mp4",
-    kicker: "Soporte experto",
-    line1: "Respaldo",
-    line2: "permanente.",
-    sub: "Asesoría técnica activa durante todo el alquiler. Tu obra no se detiene.",
     cta: false,
   },
 ];
@@ -60,14 +50,9 @@ export function VideoScrolly() {
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: "+=400%",
+          end: "+=140%",
           pin: true,
-          scrub: 1.2,
-          onUpdate: (st) => {
-            const idx = Math.min(2, Math.floor(st.progress * 3));
-            const el = root.current?.querySelector(".vs-count");
-            if (el) el.textContent = `0${idx + 1}`;
-          },
+          scrub: 0.8,
           // Pausa solo cuando el pin (toda la seccion) sale de vista —
           // no a mitad de las escenas.
           onLeave: () => videos.forEach((v) => v.pause()),
@@ -160,35 +145,34 @@ export function VideoScrolly() {
             <p className="mt-5 max-w-md text-balance text-white/75">{s.sub}</p>
 
             {s.cta && (
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Magnetic>
-                  <a
-                    href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 font-semibold text-white transition-colors hover:bg-brand-glow"
-                  >
-                    Cotizar mi equipo
-                    <ArrowRight />
-                  </a>
-                </Magnetic>
+              <div className="mt-9">
                 <Link
                   href="/equipos"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-4 font-semibold text-white transition-colors hover:border-brand-glow hover:text-brand-glow"
+                  className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full bg-brand py-2.5 pl-8 pr-2.5 text-base font-bold text-white shadow-[0_12px_45px_-12px] shadow-black/40 transition-all duration-500 [transition-timing-function:var(--ease-out-expo)] hover:-translate-y-0.5 hover:bg-brand-deep md:text-lg"
                 >
-                  Ver catálogo
+                  {/* Brillo sutil que barre al hover */}
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-x-full" />
+                  {/* Label con roll vertical */}
+                  <span className="relative block overflow-hidden">
+                    <span className="block transition-transform duration-400 [transition-timing-function:var(--ease-out-expo)] group-hover:-translate-y-full">
+                      Ver catálogo
+                    </span>
+                    <span
+                      aria-hidden
+                      className="absolute inset-0 block translate-y-full transition-transform duration-400 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-y-0"
+                    >
+                      Ver catálogo
+                    </span>
+                  </span>
+                  {/* Flecha en circulo que se impulsa */}
+                  <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white text-brand transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-x-1">
+                    <ArrowRight />
+                  </span>
                 </Link>
               </div>
             )}
           </div>
         ))}
-      </div>
-
-      {/* Contador minimo */}
-      <div className="absolute right-[var(--spacing-gutter)] top-1/2 z-10 hidden -translate-y-1/2 items-center gap-2 font-mono text-xs text-white/60 md:flex">
-        <span className="vs-count text-white">01</span>
-        <span>/</span>
-        <span>03</span>
       </div>
 
       {/* Hint de scroll */}

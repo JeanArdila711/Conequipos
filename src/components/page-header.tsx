@@ -1,9 +1,8 @@
 export function PageHeader({
-  kicker,
   title,
   description,
 }: {
-  kicker: string;
+  kicker?: string;
   title: string;
   description?: string;
 }) {
@@ -17,7 +16,6 @@ export function PageHeader({
         }}
       />
       <div className="container-x">
-        <p className="kicker mb-5">{kicker}</p>
         <h1 className="display-lg max-w-[18ch]">{title}</h1>
         {description && (
           <p className="mt-6 max-w-xl text-balance text-lg text-mute">

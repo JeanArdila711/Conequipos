@@ -25,6 +25,7 @@ export function MenuOverlay({
 }) {
   const root = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
+  const closeAnim = useRef<gsap.core.Tween[] | null>(null);
   const pathname = usePathname();
 
   // Seccion actual: coincide la ruta exacta o una subruta (/equipos/abc).
@@ -66,12 +67,28 @@ export function MenuOverlay({
   // Abre / cierra + bloqueo de scroll
   useEffect(() => {
     const lenis = getLenis();
+    // Mata solo los tweens de cierre standalone (NO killTweensOf: eso borraba
+    // los tweens hijos del timeline y el menu dejaba de abrir).
+    closeAnim.current?.forEach((t) => t.kill());
+    closeAnim.current = null;
+
     if (open) {
       tl.current?.timeScale(1).play();
       lenis?.stop();
       document.documentElement.style.overflow = "hidden";
     } else {
-      tl.current?.timeScale(2.2).reverse();
+      // Cierre limpio: no revierte el reveal (se veia feo). Sale el panel
+      // y se desvanece el backdrop; al terminar se resetea el reveal para
+      // que la proxima apertura vuelva a dibujar las rutas.
+      closeAnim.current = [
+        gsap.to(".mo-backdrop", { autoAlpha: 0, duration: 0.3, ease: "power2.out" }),
+        gsap.to(".mo-panel", {
+          xPercent: 100,
+          duration: 0.42,
+          ease: "power4.in",
+          onComplete: () => tl.current?.pause(0),
+        }),
+      ];
       lenis?.start();
       document.documentElement.style.overflow = "";
     }
@@ -174,17 +191,28 @@ export function MenuOverlay({
                     onClick={onClose}
                     className="mo-link-in group block border-b border-white/10 py-4 md:py-6"
                   >
-                    {/* Roll: el label visible sube y entra una copia en verde desde abajo */}
-                    <span className="relative block overflow-hidden font-display text-4xl font-bold leading-[1.1] md:text-6xl">
-                      <span className="block transition-transform duration-400 [transition-timing-function:var(--ease-out-expo)] group-hover:-translate-y-full">
-                        {l.label}
-                      </span>
-                      <span
-                        aria-hidden
-                        className="absolute inset-0 block translate-y-full text-brand-glow transition-transform duration-400 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-y-0"
-                      >
-                        {l.label}
-                      </span>
+                    {/* Roll por letra: cada letra sube con un delay creciente
+                        (la 1ra primero, la ultima al final) y entra una copia verde */}
+                    <span className="flex font-display text-4xl font-bold leading-[1.1] md:text-6xl">
+                      {l.label.split("").map((ch, ci) => (
+                        <span
+                          key={ci}
+                          className="relative block overflow-hidden"
+                          style={{ transitionDelay: `${ci * 0.035}s` }}
+                        >
+                          <span
+                            className="block transition-transform duration-500 [transition-delay:inherit] [transition-timing-function:var(--ease-out-expo)] group-hover:-translate-y-full"
+                          >
+                            {ch === " " ? " " : ch}
+                          </span>
+                          <span
+                            aria-hidden
+                            className="absolute inset-0 block translate-y-full text-brand-glow transition-transform duration-500 [transition-delay:inherit] [transition-timing-function:var(--ease-out-expo)] group-hover:translate-y-0"
+                          >
+                            {ch === " " ? " " : ch}
+                          </span>
+                        </span>
+                      ))}
                     </span>
                   </Link>
                 </div>

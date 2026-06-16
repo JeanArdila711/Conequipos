@@ -172,10 +172,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-  }
   .animate-\[marquee_38s_linear_infinite\] {
     animation: none !important;
   }

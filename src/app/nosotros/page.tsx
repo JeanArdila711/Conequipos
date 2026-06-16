@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
+import { ScrollPaintText } from "@/components/scroll-paint-text";
 import { StatCounter } from "@/components/stat-counter";
 import { Magnetic } from "@/components/magnetic";
 import { ArrowRight } from "@/components/icons";
@@ -42,16 +43,10 @@ export default function NosotrosPage() {
 
       {/* Manifiesto */}
       <section className="container-x py-24 md:py-36">
-        <p
-          data-reveal
+        <ScrollPaintText
+          text="No alquilamos máquinas. Entregamos tiempo, productividad y tranquilidad para que tu obra no se detenga."
           className="display-lg max-w-[20ch] text-3xl leading-tight md:text-5xl"
-        >
-          No alquilamos máquinas.{" "}
-          <span className="text-mute">
-            Entregamos tiempo, productividad y tranquilidad para que tu obra no
-            se detenga.
-          </span>
-        </p>
+        />
       </section>
 
       {/* Stats */}
@@ -66,9 +61,6 @@ export default function NosotrosPage() {
       {/* Valores */}
       <section className="container-x py-24 md:py-36">
         <div className="mb-16">
-          <p data-reveal className="kicker mb-4">
-            Cómo trabajamos
-          </p>
           <h2 data-reveal className="display-lg max-w-[16ch]">
             Cuatro razones para confiar tu obra en Conequipos
           </h2>

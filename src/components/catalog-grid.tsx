@@ -182,8 +182,8 @@ export function CatalogGrid({
 
         {filtered.length > 0 && (
           <div className="grid grid-cols-2 gap-3 sm:gap-6 xl:grid-cols-3">
-            {filtered.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} />
+            {filtered.map((p) => (
+              <ProductCard key={p.id} product={p} reveal={false} />
             ))}
           </div>
         )}
