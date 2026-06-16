@@ -1,53 +1,68 @@
 import Link from "next/link";
-import { ArrowRight, WhatsAppIcon } from "@/components/icons";
-import { HeroStage } from "@/components/hero-stage";
-import { waLink } from "@/lib/utils";
+import { ArrowRight } from "@/components/icons";
 
+// Hero simple: un solo video de fondo a pantalla completa. Texto + CTA encima.
 export function VideoScrolly() {
   return (
-    <section className="container-x flex min-h-svh flex-col justify-center pt-28 pb-12 md:pt-32">
-      {/* ---------- Mobile: apilado simple ---------- */}
-      <div className="md:hidden">
-        <h1 className="font-display font-bold display-lg">
-          Maquinaria que <span className="text-brand">no para tu obra.</span>
-        </h1>
-        <p className="mt-5 text-lg text-mute">
-          Equipos certificados y mantenidos, listos para producir desde el
-          primer día. Alquiler en Itagüí y todo el Valle de Aburrá.
-        </p>
-        <div className="relative mt-8 h-64 w-full overflow-hidden rounded-3xl border border-line bg-black">
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/videos/obra-1.mp4"
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload="auto"
-          />
-        </div>
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Link
-            href="/equipos"
-            className="group inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3.5 font-semibold text-white transition-colors hover:bg-brand-deep"
-          >
-            Ver catálogo
-            <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
-          <a
-            href={waLink("Hola Conequipos, quiero cotizar el alquiler de un equipo.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3.5 font-semibold transition-colors hover:border-brand"
-          >
-            <WhatsAppIcon className="h-5 w-5" />
-            Cotizar por WhatsApp
-          </a>
+    <section
+      data-video-hero
+      className="relative isolate h-svh overflow-hidden bg-black"
+    >
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/videos/obra-1.mp4"
+        muted
+        loop
+        playsInline
+        autoPlay
+        preload="auto"
+      />
+
+      {/* Scrims para legibilidad */}
+      <div className="absolute inset-0 z-[5] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+      <div className="absolute inset-x-0 top-0 z-[5] h-28 bg-gradient-to-b from-black/50 to-transparent" />
+
+      {/* Texto */}
+      <div className="container-x relative z-10 flex h-full items-end pb-16 md:pb-24">
+        <div>
+          <h2 className="font-display font-bold text-white display-lg">
+            <span className="block">Maquinaria que</span>
+            <span className="block text-brand-glow">no para tu obra.</span>
+          </h2>
+          <p className="mt-5 max-w-md text-balance text-white/75">
+            Equipos certificados y mantenidos, listos para producir desde el
+            primer día.
+          </p>
+
+          <div className="mt-9">
+            <Link
+              href="/equipos"
+              className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full bg-brand py-2.5 pl-8 pr-2.5 text-base font-bold text-white shadow-[0_12px_45px_-12px] shadow-black/40 transition-all duration-500 [transition-timing-function:var(--ease-out-expo)] hover:-translate-y-0.5 hover:bg-brand-deep md:text-lg"
+            >
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-x-full" />
+              <span className="relative block overflow-hidden">
+                <span className="block transition-transform duration-400 [transition-timing-function:var(--ease-out-expo)] group-hover:-translate-y-full">
+                  Ver catálogo
+                </span>
+                <span
+                  aria-hidden
+                  className="absolute inset-0 block translate-y-full transition-transform duration-400 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-y-0"
+                >
+                  Ver catálogo
+                </span>
+              </span>
+              <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white text-brand transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-x-1">
+                <ArrowRight />
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* ---------- Desktop: composición hero214 con playlist (cada 5s) ---------- */}
-      <HeroStage />
+      {/* Hint de scroll */}
+      <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 text-[0.7rem] font-medium tracking-wide text-white/50">
+        Scroll
+      </div>
     </section>
   );
 }
