@@ -71,7 +71,7 @@ export const categories: Category[] = [
     "id": 16,
     "name": "Equipos electromecánicos",
     "slug": "equipos-electromecanicos",
-    "count": 49
+    "count": 0
   },
   {
     "id": 25,

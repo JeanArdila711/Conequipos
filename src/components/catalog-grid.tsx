@@ -189,9 +189,22 @@ export function CatalogGrid({
         )}
 
         {filtered.length === 0 && (
-          <div className="rounded-2xl border border-line bg-ink-2 p-16 text-center">
-            <p className="font-display text-2xl">Sin resultados</p>
-            <p className="mt-2 text-mute">Prueba con otra categoría o término.</p>
+          <div
+            className="relative overflow-hidden rounded-2xl border border-line bg-ink-2 p-16 text-center"
+            style={{
+              backgroundImage:
+                "radial-gradient(var(--color-line) 1px, transparent 1px)",
+              backgroundSize: "16px 16px",
+            }}
+          >
+            <div className="relative mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-ink-3">
+              <SearchIcon className="h-5 w-5 text-mute" />
+            </div>
+            <p className="relative mt-5 font-display text-2xl">Sin resultados</p>
+            <p className="relative mx-auto mt-2 max-w-xs text-mute">
+              No encontramos nada para esa categoría o término. Prueba con otra
+              búsqueda.
+            </p>
           </div>
         )}
       </div>

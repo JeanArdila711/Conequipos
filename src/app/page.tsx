@@ -91,7 +91,7 @@ export default function Home() {
           {featuredCats.map((c, i) => (
             <Link
               key={c.slug}
-              href={`/categoria/${c.slug}`}
+              href={`/equipos?categoria=${c.slug}`}
               data-reveal="scale"
               className={`group relative mb-4 block break-inside-avoid overflow-hidden rounded-2xl ${
                 HEIGHTS[i % HEIGHTS.length]

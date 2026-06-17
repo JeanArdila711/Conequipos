@@ -9,12 +9,25 @@ export const metadata: Metadata = {
     "Catálogo completo de maquinaria para alquiler: elevación, compactación, concreto, generadores, compresores y más.",
 };
 
-export default function EquiposPage() {
+export default async function EquiposPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ categoria?: string }>;
+}) {
+  const { categoria } = await searchParams;
+  const initialCategory = categories.some((c) => c.slug === categoria)
+    ? categoria
+    : undefined;
+
   return (
     <>
       <EquiposHero />
       <section className="container-x py-16">
-        <CatalogGrid products={products} categories={categories} />
+        <CatalogGrid
+          products={products}
+          categories={categories}
+          initialCategory={initialCategory}
+        />
       </section>
     </>
   );
