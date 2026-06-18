@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Equipos para construcción",
   description:
     "Catálogo completo de maquinaria para alquiler: elevación, compactación, concreto, generadores, compresores y más.",
+  alternates: { canonical: "/equipos" },
 };
 
 export default async function EquiposPage({

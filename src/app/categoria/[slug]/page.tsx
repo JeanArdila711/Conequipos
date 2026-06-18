@@ -9,6 +9,8 @@ import {
   getCategory,
   productsByCategory,
 } from "@/data/catalog";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbSchema, SITE_URL } from "@/lib/schema";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }));
@@ -22,9 +24,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const c = getCategory(slug);
   if (!c) return {};
+  const description = `Alquiler de ${c.name.toLowerCase()} para construcción en Itagüí, Medellín y Antioquia.`;
   return {
     title: c.name,
-    description: `Alquiler de ${c.name.toLowerCase()} para construcción en Medellín y Antioquia.`,
+    description,
+    alternates: { canonical: `/categoria/${slug}` },
+    openGraph: { type: "website", url: `/categoria/${slug}`, title: c.name, description },
   };
 }
 
@@ -39,8 +44,26 @@ export default async function CategoryPage({
 
   const items = productsByCategory(slug);
 
+  const breadcrumb = breadcrumbSchema([
+    { name: "Equipos", path: "/equipos" },
+    { name: category.name, path: `/categoria/${slug}` },
+  ]);
+  const itemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: category.name,
+    numberOfItems: items.length,
+    itemListElement: items.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/equipos/${p.slug}`,
+      name: p.name,
+    })),
+  };
+
   return (
     <>
+      <JsonLd data={[breadcrumb, itemList]} />
       <PageHeader
         kicker={`${items.length} equipos disponibles`}
         title={category.name}

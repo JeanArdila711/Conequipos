@@ -6,6 +6,8 @@ import { DispatchBoard } from "@/components/dispatch-board";
 import { ScrollPaintText } from "@/components/scroll-paint-text";
 import { ArrowRight, CategoryIcon } from "@/components/icons";
 import { categories, products } from "@/data/catalog";
+import { JsonLd } from "@/components/json-ld";
+import { faqSchema } from "@/lib/schema";
 
 const featured = products.filter((p) => p.image).slice(0, 7);
 
@@ -54,6 +56,7 @@ const PROCESS = [
 export default function Home() {
   return (
     <>
+      <JsonLd data={faqSchema} />
       <VideoScrolly />
 
       <Marquee
@@ -139,7 +142,7 @@ export default function Home() {
 
       {/* DESTACADOS — tablero de despacho en vivo (slab oscuro) */}
       <section className="border-y border-line bg-[#09090b] text-ink">
-        <div className="container-x py-24 md:py-36">
+        <div className="container-x pt-24 pb-12 md:pt-36 md:pb-16">
           <div className="mb-16 w-full md:mb-24">
             <span className="text-sm font-semibold text-brand-glow">
               Los que más nos piden

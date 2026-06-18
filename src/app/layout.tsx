@@ -5,14 +5,32 @@ import SmoothScroll from "@/components/smooth-scroll";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
+import { JsonLd } from "@/components/json-ld";
+import {
+  organizationSchema,
+  localBusinessSchema,
+  websiteSchema,
+} from "@/lib/schema";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+  preload: false, // solo se usa en números puntuales
+});
 const space = Space_Grotesk({
   variable: "--font-space",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
+  display: "swap",
 });
+
+const OG_IMAGE = "/fotos/pexels-ritesh-arya-1423700-3097103.webp";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://conequipos.com.co"),
@@ -21,21 +39,55 @@ export const metadata: Metadata = {
     template: "%s · Conequipos",
   },
   description:
-    "Alquiler y venta de maquinaria certificada para construcción en Medellín y Antioquia. Logística ágil, soporte experto y 95% de disponibilidad.",
+    "Alquiler y venta de maquinaria certificada para construcción en Itagüí, Medellín y todo Antioquia. Logística ágil, soporte experto y 95% de disponibilidad.",
+  applicationName: "Conequipos",
+  authors: [{ name: "Conequipos" }],
+  creator: "Conequipos",
+  publisher: "Conequipos S.A.S.",
+  category: "Construcción",
   keywords: [
     "alquiler de maquinaria",
-    "equipos de construcción",
-    "Medellín",
-    "Antioquia",
+    "alquiler de equipos para construcción",
+    "alquiler maquinaria Itagüí",
+    "alquiler maquinaria Medellín",
+    "equipos de construcción Antioquia",
+    "Valle de Aburrá",
     "andamios",
-    "compresores",
+    "compresores de aire",
     "plantas eléctricas",
+    "equipos de concreto",
+    "equipos de compactación",
   ],
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "es_CO",
     siteName: "Conequipos",
+    url: "/",
+    title: "Conequipos · Alquiler de equipos para construcción",
+    description:
+      "Maquinaria certificada para tu obra en Itagüí, Medellín y todo Antioquia. Entrega en obra y soporte experto.",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Conequipos" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Conequipos · Alquiler de equipos para construcción",
+    description:
+      "Maquinaria certificada para tu obra en Itagüí, Medellín y todo Antioquia.",
+    images: [OG_IMAGE],
+  },
+  formatDetection: { telephone: true, email: true, address: true },
 };
 
 export default function RootLayout({
@@ -47,6 +99,7 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} ${space.variable} h-full overflow-x-hidden`}
     >
       <body className="min-h-full overflow-x-hidden bg-ink text-bone grain">
+        <JsonLd data={[organizationSchema, localBusinessSchema, websiteSchema]} />
         <SmoothScroll>
           <Header />
           <main className="overflow-x-hidden">{children}</main>

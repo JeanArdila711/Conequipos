@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Contacto",
   description:
     "Cotiza el alquiler de equipos para construcción. WhatsApp, correo y teléfono. Medellín e Itagüí, Antioquia.",
+  alternates: { canonical: "/contacto" },
 };
 
 const MailIcon = (
@@ -54,7 +55,7 @@ export default function ContactoPage() {
           <h1 className="mt-3 font-display text-3xl font-bold leading-[1.05] md:text-4xl">
             Cotiza tu equipo hoy
           </h1>
-          <p className="mt-4 text-mute">
+          <p data-reveal="blur" className="mt-4 text-mute">
             Respondemos rápido. Cuéntanos qué necesitas y coordinamos
             disponibilidad, precio y entrega.
           </p>

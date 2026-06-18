@@ -11,6 +11,8 @@ import { ProductCard } from "@/components/product-card";
 import { Magnetic } from "@/components/magnetic";
 import { ArrowRight, WhatsAppIcon } from "@/components/icons";
 import { waLink, EMAIL } from "@/lib/utils";
+import { JsonLd } from "@/components/json-ld";
+import { productSchema, breadcrumbSchema } from "@/lib/schema";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -24,10 +26,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const p = getProduct(slug);
   if (!p) return {};
+  const description =
+    p.description || `Alquiler de ${p.name} en Itagüí, Medellín y Antioquia.`;
   return {
     title: p.name,
-    description: p.description || `Alquiler de ${p.name} en Medellín y Antioquia.`,
-    openGraph: { images: p.image ? [p.image] : [] },
+    description,
+    alternates: { canonical: `/equipos/${slug}` },
+    openGraph: {
+      type: "website",
+      url: `/equipos/${slug}`,
+      title: p.name,
+      description,
+      images: p.image ? [p.image] : [],
+    },
   };
 }
 
@@ -57,8 +68,22 @@ export default async function ProductPage({
     `Hola Conequipos, quiero cotizar el alquiler de: ${product.name}. ¿Disponibilidad y precio?`
   );
 
+  const breadcrumb = breadcrumbSchema([
+    { name: "Equipos", path: "/equipos" },
+    ...(product.categoryNames[0]
+      ? [
+          {
+            name: product.categoryNames[0],
+            path: `/categoria/${product.categories[0]}`,
+          },
+        ]
+      : []),
+    { name: product.name, path: `/equipos/${product.slug}` },
+  ]);
+
   return (
     <>
+      <JsonLd data={[productSchema(product), breadcrumb]} />
       <div className="container-x pt-32 md:pt-40">
         {/* Migas */}
         <nav className="mb-10 flex flex-wrap items-center gap-2 text-sm text-mute">

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Nosotros",
   description:
     "Conequipos: alquiler y venta de maquinaria para construcción con logística ágil y soporte experto en Antioquia.",
+  alternates: { canonical: "/nosotros" },
 };
 
 export default function NosotrosPage() {
@@ -111,12 +112,12 @@ export default function NosotrosPage() {
               <h3 className="font-display text-2xl font-bold md:text-3xl">
                 En la obra es donde se nota
               </h3>
-              <p className="mt-4 text-mute">
+              <p data-reveal="blur" className="mt-4 text-mute">
                 Cada equipo sale revisado y mantenido. No prometemos catálogos
                 bonitos; prometemos que la máquina prende y rinde el día que
                 llega.
               </p>
-              <p className="mt-4 text-mute">
+              <p data-reveal="blur" className="mt-4 text-mute">
                 Si algo falla, respondemos rápido. Tu obra no puede parar y
                 nosotros tampoco.
               </p>

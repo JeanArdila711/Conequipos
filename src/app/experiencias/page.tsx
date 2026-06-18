@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Experiencias",
   description:
     "Lo que dicen las obras y constructores que mantienen su producción en movimiento con Conequipos.",
+  alternates: { canonical: "/experiencias" },
 };
 
 type Testimonial = {
@@ -223,7 +224,7 @@ export default function ExperienciasPage() {
     <>
       {/* RESEÑA DESTACADA — encabezado + quote editorial */}
       <section className="container-x pt-36 pb-20 md:pt-44 md:pb-28">
-        <div className="mb-12">
+        <div className="mb-12 text-center">
           <span className="kicker">Testimonios</span>
           <ScrollPaintText
             as="h2"

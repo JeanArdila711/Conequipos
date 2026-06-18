@@ -126,7 +126,7 @@ export function DispatchBoard({ products }: { products: Product[] }) {
       {/* COLUMNA DER — ficha que se "enciende" + asesor real */}
       <div className="hidden lg:block">
         <div className="sticky top-28 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
-          <div className="relative aspect-4/3 bg-white">
+          <div className="relative aspect-video bg-white">
             {current.image && (
               <Image
                 key={current.id}
@@ -143,10 +143,10 @@ export function DispatchBoard({ products }: { products: Product[] }) {
             <span className="text-xs font-medium text-ink/45">
               {current.categoryNames[0] ?? "Equipo"}
             </span>
-            <h3 className="mt-1 font-display text-2xl leading-tight text-ink">
+            <h3 className="mt-1 line-clamp-2 min-h-[2.5em] font-display text-2xl leading-tight text-ink">
               {current.name}
             </h3>
-            <p className="mt-3 line-clamp-3 text-sm text-ink/55">
+            <p className="mt-3 line-clamp-3 min-h-[3.75rem] text-sm text-ink/55">
               {current.description}
             </p>
 
