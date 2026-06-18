@@ -22,17 +22,11 @@ export function EquiposHero() {
         opacity: 0,
         filter: "blur(14px)",
         duration: 0.9,
-      })
-        .from(
-          ".eh-meta",
-          { y: 12, opacity: 0, duration: 0.7, stagger: 0.1 },
-          "-=0.5"
-        )
-        .from(
-          ".eh-rule",
-          { scaleX: 0, duration: 0.8, transformOrigin: "left" },
-          "-=0.6"
-        );
+      }).from(
+        ".eh-meta",
+        { y: 12, opacity: 0, duration: 0.7, stagger: 0.1 },
+        "-=0.5"
+      );
 
       // Contadores
       gsap.utils.toArray<HTMLElement>(".eh-count").forEach((el) => {
@@ -55,7 +49,7 @@ export function EquiposHero() {
   return (
     <section
       ref={root}
-      className="relative overflow-hidden border-b border-line bg-ink pt-28 pb-10 md:pt-36 md:pb-14"
+      className="relative overflow-hidden bg-ink pt-28 pb-10 md:pt-36 md:pb-14"
     >
       {/* Canvas de puntos interactivo */}
       <DotCanvas className="absolute inset-0 z-0 h-full w-full" />
@@ -128,9 +122,6 @@ export function EquiposHero() {
             </div>
           </div>
         </div>
-
-        {/* Línea decorativa */}
-        <div className="eh-rule mt-10 h-px w-full bg-line" />
       </div>
     </section>
   );
