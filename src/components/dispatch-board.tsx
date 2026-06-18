@@ -26,7 +26,7 @@ export function DispatchBoard({ products }: { products: Product[] }) {
       className="grid gap-8 lg:grid-cols-[1fr_minmax(0,400px)] lg:items-start"
     >
       {/* COLUMNA IZQ — la lista */}
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.03]">
         {/* Cabecera humana: dónde estamos + que contesta una persona */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-4 text-sm text-ink/60 sm:px-5">
           <span className="flex items-center gap-2">

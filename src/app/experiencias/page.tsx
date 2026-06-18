@@ -240,13 +240,13 @@ export default function ExperienciasPage() {
           {FEATURED.map((f) => (
             <figure
               key={f.name}
-              className="flex flex-col justify-between rounded-3xl border border-line bg-ink-2 p-6 md:p-7"
+              className="flex min-w-0 flex-col justify-between rounded-3xl border border-line bg-ink-2 p-6 md:p-7"
             >
               <blockquote className="text-base leading-relaxed text-bone">
                 {f.quote}
               </blockquote>
               <div className="mt-6 flex items-center justify-between gap-4">
-                <figcaption className="flex items-center gap-3">
+                <figcaption className="flex min-w-0 items-center gap-3">
                   <Avatar photo={f.photo} name={f.name} accent={f.accent} />
                   <div className="min-w-0">
                     <p className="truncate font-semibold text-bone">{f.name}</p>
